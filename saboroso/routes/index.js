@@ -30,6 +30,16 @@ router.get('/contacts', function(req, res, next){
 
 });// router get contacts
 
+router.post('/contacts', function(req, res, next){
+
+  res.render('contacts', {
+    title: 'Contato - Restaurante Saboroso!',
+    background: 'images/img_bg_3.jpg',
+    h1: 'Diga um oi!'
+  });
+
+});// router get contacts
+
 router.get('/menus', function(req, res, next){
 
   menus.getMenus().then(results =>{
@@ -66,7 +76,7 @@ router.post('/reservations', function(req, res, next){
     reservations.render(req, res, 'Campo obrigatório');
   } else {
 
-    reservations.save(req).then(results => {
+    reservations.save(req.body).then(results => {
 
       reservations.render(req, res, null, 'Reserva realizada com sucesso!');
     
