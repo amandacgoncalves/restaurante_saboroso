@@ -95,7 +95,13 @@ router.get('/menus', function(req, res, next) {
 });//router get menus
 
 router.post('/menus', function(req, res, next){
-    res.send(req.body);
+    
+    menus.save(req.fields, req.files).then(results =>{
+        res.send(results);
+    }).catch(err =>{
+        res.send(err);
+    });//menus save catch
+
 });//router post
 
 router.get('/reservations', function(req, res, next) {

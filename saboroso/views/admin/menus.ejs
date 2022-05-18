@@ -156,6 +156,8 @@ let formCreate = document.querySelector('#modal-create form');
       body: formCreateData
     }).then(response => response.json()).then(json =>{
 
+      window.location.reload();
+
     });//fetch
 
   });//form create
