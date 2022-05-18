@@ -1,9 +1,11 @@
 module.exports = {
-    getMenus() {
-        return [
+
+    getMenus(req) {
+
+        let menus = [
             {
                 text:'Tela Inicial',
-                href:'/admin',
+                href:'/admin/',
                 icon:'home',
                 active: false
             },
@@ -42,6 +44,18 @@ module.exports = {
                 icon:'envelope',
                 active: false
             }
-        ]
-    }
-}
+
+        ]//menus
+
+        menus.map(menu => {
+
+            if (menu.href === `/admin${req.url}`) menu.active = true;
+            console.log(req.url, menu.href);
+
+        });//menus map
+
+        return menus;
+
+    }//get menus
+
+}//module exports

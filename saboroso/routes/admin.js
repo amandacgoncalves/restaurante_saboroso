@@ -16,10 +16,10 @@ router.use(function (req, res, next){
 });//router use 
 
 router.use(function(req, res, next){
-    req.menus = admingetMenus();
+    req.menus = admin.getMenus(req);
 
     next();
-})
+});//admin get menus
 
 router.get('logout', function(req, res, next){
     
