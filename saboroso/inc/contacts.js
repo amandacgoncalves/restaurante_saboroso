@@ -20,7 +20,7 @@ module.exports = {
         return new Promise ((resolve, reject)=>{
 
             conn.query(`
-            INSERT INTO tb_contacts (name. email, message)
+            INSERT INTO tb_contacts (name, email, message)
             VALUES (?, ?, ?)
             `, [
                 fields.name,
