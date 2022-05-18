@@ -2,6 +2,7 @@ const { Router } = require('express');
 var express = require ('express');
 const users = require('../inc/users');
 var users = require('./../inc/users')
+var admin = require('./../inc/admin')
 var router = express.Router();
 
 router.use(function (req, res, next){
@@ -10,10 +11,15 @@ router.use(function (req, res, next){
         res.redirect('admin/login');
     } else {
           next();
-
     }
 
 });//router use 
+
+router.use(function(req, res, next){
+    req.menus = admingetMenus();
+
+    next();
+})
 
 router.get('logout', function(req, res, next){
     
@@ -25,7 +31,9 @@ router.get('logout', function(req, res, next){
 
 router.get('/', function(req, res, next) {
 
-        res.render('admin/index');
+        res.render('admin/index', {
+            menus: req.menus
+        });
 
 });//router GET
 
@@ -57,7 +65,9 @@ router.get('/login', function(req, res, next) {
 
 router.get('/contacts', function(req, res, next) {
 
-    res.render('admin/contacts');
+    res.render('admin/contacts', {
+        menus: req.menus
+    });
 
 });//router get contacts 
 
@@ -69,21 +79,26 @@ router.get('/emails', function(req, res, next) {
 
 router.get('/menus', function(req, res, next) {
 
-    res.render('admin/menus');
+    res.render('admin/menus', {
+        menus: req.menus
+    });
 
 });//router get menus
 
 router.get('/reservations', function(req, res, next) {
 
     res.render('admin/reservations', {
-        date: {}
+        date: {},
+        menus: req.menus
     }); reservations
 
 });//router get reservations
 
 router.get('/users', function(req, res, next) {
 
-    res.render('admin/users');
+    res.render('admin/users', {
+        menus: req.menus
+    });
 
 });//router get users
 
