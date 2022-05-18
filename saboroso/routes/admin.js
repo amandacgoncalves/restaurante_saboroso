@@ -4,9 +4,28 @@ const users = require('../inc/users');
 var users = require('./../inc/users')
 var router = express.Router();
 
+router.use(function (req, res, next){
+
+    if (['/login'].indexOf(req.url) === -1 &&!req.session.user) {
+        res.redirect('admin/login');
+    } else {
+          next();
+
+    }
+
+});//router use 
+
+router.get('logout', function(req, res, next){
+    
+    delete req.session.user;
+
+    res.redirect('admin/login')
+    
+})//router get logout
+
 router.get('/', function(req, res, next) {
 
-    res.render('admin/index');//res render
+        res.render('admin/index');
 
 });//router GET
 
@@ -38,19 +57,19 @@ router.get('/login', function(req, res, next) {
 
 router.get('/contacts', function(req, res, next) {
 
-    res.render('admin/contacts');//res render
+    res.render('admin/contacts');
 
 });//router get contacts 
 
 router.get('/emails', function(req, res, next) {
 
-    res.render('admin/emails');//res render
+    res.render('admin/emails');
 
 });//router get emails
 
 router.get('/menus', function(req, res, next) {
 
-    res.render('admin/menus');//res render
+    res.render('admin/menus');
 
 });//router get menus
 
@@ -58,13 +77,13 @@ router.get('/reservations', function(req, res, next) {
 
     res.render('admin/reservations', {
         date: {}
-    });//res render reservations
+    }); reservations
 
 });//router get reservations
 
 router.get('/users', function(req, res, next) {
 
-    res.render('admin/users');//res render
+    res.render('admin/users');
 
 });//router get users
 
