@@ -102,7 +102,21 @@ router.post('/menus', function(req, res, next){
         res.send(err);
     });//menus save catch
 
-});//router post
+});//router post()
+
+router.delete('/menus/:id', function (req, res, next) {
+
+    menus.delete(req.params.id).then(results =>{
+
+        res.send(results);
+
+    }).catch(err =>{
+
+        res.send(err);
+
+    });//menus delete
+
+});//router delete
 
 router.get('/reservations', function(req, res, next) {
 

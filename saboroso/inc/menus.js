@@ -1,5 +1,6 @@
 let conn = require(`./db`);
-let path = require('path')
+let path = require('path');
+const { resolve } = require('path');
 
 module.exports = {
 
@@ -84,6 +85,28 @@ module.exports = {
         
       });//return new promise 
 
-    }//save
+    },//save
+
+    delete(id) {
+
+      return new Promise((resolve, reject) => {
+
+        conn.query(`
+          DELETE FROM tb_menus WHERE id = ?
+        `, [
+          id
+        ], (err, result) =>{
+        
+          if(err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+
+        });//conn query
+
+      })//new promise
+
+    }//delete 
 
 }//module exports

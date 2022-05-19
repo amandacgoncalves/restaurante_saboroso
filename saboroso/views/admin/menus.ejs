@@ -173,6 +173,37 @@ let formCreate = document.querySelector('#modal-create form');
 
     });//form create save 
 
+  [...document.querySelectorAll('.btn-delete')].forEach(btn => {
+
+    btn.addEventListener('click', e=> {
+
+      let tr = e.path.find(el =>{
+
+        return(el.tagName.toUpperCase() === 'TR');
+
+      });//let tr
+
+      let data = JSON.parse(tr.dataset.row);
+
+      if (confirm(`Tem certeza que deseja excluir ${data.title}?`)) {
+
+        fetch(`/admin/menus/${data.id}`, {
+        method: 'DELETE'
+      })
+
+        .then(response => response.json())
+        .then(json =>{
+
+          console.log(json)
+
+        });//then
+
+      }//if confirm
+
+    });//add event listener
+
+  });//document query selector all 
+
   [...document.querySelectorAll('.btn-update')].forEach(btn =>{
 
     btn.addEventListener('click', a =>{
