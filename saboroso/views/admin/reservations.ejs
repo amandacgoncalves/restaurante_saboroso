@@ -262,4 +262,35 @@ btn.addEventListener('click', a =>{
 
 });//query selector all 
 
+  [...document.querySelectorAll('.btn-delete')].forEach(btn => {
+
+    btn.addEventListener('click', e=> {
+
+      let tr = e.path.find(el =>{
+
+        return(el.tagName.toUpperCase() === 'TR');
+
+      });//let tr
+
+      let data = JSON.parse(tr.dataset.row);
+
+      if (confirm(`Tem certeza que deseja excluir a resera de ${data.name}?`)) {
+
+        fetch(`/admin/reservations/${data.id}`, {
+        method: 'DELETE'
+      })
+
+        .then(response => response.json())
+        .then(json =>{
+
+          window.location.reload();
+
+        });//then
+
+      }//if confirm
+
+    });//add event listener
+
+  });//document query selector all 
+
 </script>

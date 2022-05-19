@@ -94,6 +94,28 @@ module.exports = {
           
           });//new promise
 
-    }
+    },//get reservations
+
+    delete(id) {
+
+        return new Promise((resolve, reject) => {
+  
+          conn.query(`
+            DELETE FROM tb_reservations WHERE id = ?
+          `, [
+            id
+          ], (err, result) =>{
+          
+            if(err) {
+              reject(err);
+            } else {
+              resolve(results);
+            }
+  
+          });//conn query
+  
+        })//new promise
+  
+      }//delete 
 
 }//module exports
