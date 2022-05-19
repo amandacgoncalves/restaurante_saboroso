@@ -1,9 +1,10 @@
 const { Router } = require('express');
 var express = require ('express');
 const users = require('../inc/users');
-var users = require('./../inc/users')
+var users = require('./../inc/users');
 var admin = require('./../inc/admin');
-var menus = require('./../inc/menus')
+var menus = require('./../inc/menus');
+var reservations = require ('./../inc/reservations');
 var router = express.Router();
 
 router.use(function (req, res, next){
@@ -125,6 +126,30 @@ router.get('/reservations', function(req, res, next) {
     })); 
 
 });//router get reservations
+
+router.post('/reservations', function(req, res, next){
+    
+    reservations.save(req.fields, req.files).then(results =>{
+        res.send(results);
+    }).catch(err =>{
+        res.send(err);
+    });//menus save catch
+
+});//router post()
+
+router.delete('/reservations/:id', function (req, res, next) {
+
+    reservations.delete(req.params.id).then(results =>{
+
+        res.send(results);
+
+    }).catch(err =>{
+
+        res.send(err);
+
+    });//menus delete
+
+});//router delete
 
 router.get('/users', function(req, res, next) {
 
