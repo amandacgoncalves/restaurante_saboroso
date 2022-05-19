@@ -227,7 +227,7 @@ let formCreate = document.querySelector('#modal-create form');
           break;
           default:
 
-          let input = formUpdate.querySe2lector(`[name=${name}]`);
+          let input = formUpdate.querySelector(`[name=${name}]`);
           if(input) input.value = data[name];
 
         }//switch
