@@ -5,8 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
-var  formidable = require('formidable');
-
+var formidable = require('formidable');
 var indexRouter = require('./routes/index');
 var adminRouter = require('./routes/admin');
 
