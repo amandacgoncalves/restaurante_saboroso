@@ -46,8 +46,8 @@ class HcodeGrid {
         this.options = Object.assign({}, {
             formCreate: '#modal-create form',
             formUpdate: '#modal-update form',
-            btnUpdate: '.btn-update',
-            btnDelete: '.btn-delete',
+            btnUpdate: 'btn-update',
+            btnDelete: 'btn-delete',
             onUpdateLoad: (form, name, data) => {
 
               let input = form.querySelector('[name='+name+']');
@@ -56,6 +56,8 @@ class HcodeGrid {
 
             }//on update load
         }, configs);
+
+        this.rows = [...document.querySelector('table tbody tr')];
 
         this.initForms();
         this.initButtons();
@@ -66,27 +68,25 @@ class HcodeGrid {
 
         this.formCreate = document.querySelector(this.options.formCreate);
 
-        this.formCreate.save().then(json => {
-      
-          this.fireEvent('afterFormCreate');
-      
-        }).catch(err =>{
-      
+        this.formCreate.save({
+          success: () => {
+            this.fireEvent('afterFormCreate');
+          },
+          failure:() => {
             this.fireEvent('afterFormCreateError');
-      
-        });//form create save 
+          }
+        });//form create save
       
         this.formUpdate = document.querySelector(this.options.formUpdate);
       
-        this.formUpdate.save().then(json => {
-      
+        this.formUpdate.save({
+          success: () =>{
             this.fireEvent('afterFormUpdate');
-      
-          }).catch(err =>{
-      
+          },
+          failure:() =>{
             this.fireEvent('afterFormUpdateError');
-      
-          });//form create save
+          }
+        });//form update save
 
     }//init forms
 
@@ -108,33 +108,25 @@ class HcodeGrid {
 
     }
 
-    initButtons(){
-    
-    [...document.querySelectorAll(this.options.btnUpdate)].forEach(btn =>{
+    btnUpdateClick(e) {
 
-    btn.addEventListener('click', a =>{
-
-        this.fireEvent('beforeUpdateClick', [e]);
+      this.fireEvent('beforeUpdateClick', [e]);
 
         let data = this.getTrData(e);
 
-  for (let name in data) {
+          for (let name in data) {
 
-    this.options.onUpdateLoad(this.formUpdate, name, data);
+      this.options.onUpdateLoad(this.formUpdate, name, data);
 
   }//form
 
   this.fireEvent('afterUpdateClick', [e]);
 
-});//event listener
+    }
 
-});//query selector all 
+    btnDeleteClick(e) {
 
-  [...document.querySelectorAll(this.options.btnDelete)].forEach(btn => {
-
-    btn.addEventListener('click', e=> {
-
-        this.fireEvent('beforeDeleteClick');
+      this.fireEvent('beforeDeleteClick');
 
         let data = this.getTrData(e);
 
@@ -153,9 +145,36 @@ class HcodeGrid {
 
       }//if confirm
 
-    });//add event listener
 
-  });//document query selector all 
+    }
+
+    initButtons(){
+
+      this.rows.forEach(row => {
+
+        [...row.querySelectorAll('.btn')].forEach(btn => {
+
+          btn.addEventListener('click', e => {
+
+            if (e.target.classList.contains(this.options.btnUpdate)) {
+
+              this.btnUpdateClick(e);
+
+            } else if (e.target.classList.contains(this.options.btnDelete)) {
+
+              this.btnDeleteClick(e);
+
+            } else {
+
+              this.fireEvent('buttonClick', [e.target, this.getTrData(e), e]);
+
+            }
+
+          });//e target class list
+
+        });//row query selector all
+
+      });//this rows for each
 
     }//init
 
