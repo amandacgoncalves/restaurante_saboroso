@@ -162,8 +162,43 @@ router.delete('/reservations/:id', function (req, res, next) {
 
 router.get('/users', function(req, res, next) {
 
-    res.render('admin/users', admin.getParams(req));
+    users.getUsers().then(data =>{
+
+    res.render('admin/users', admin.getParams(req, {
+        data
+    }));//res render
+
+
+    });//users get users
 
 });//router get users
+
+router.post('/users', function(req, res, next) {
+
+    users.save(req.fields).then(results =>{
+      
+        res.send(results);
+
+    }).catch(err=> {
+
+        res.send(err);
+
+    });//users save 
+
+});//router post users
+
+router.delete('/users/:id', function(req, res, next) {
+
+    users.delete(req.params.id).then(results =>{
+      
+        res.send(results);
+
+    }).catch(err=> {
+
+        res.send(err);
+
+    });//users delete 
+
+});//router delete users
 
 module.exports = router;

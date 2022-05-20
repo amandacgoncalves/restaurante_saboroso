@@ -37,6 +37,96 @@ module.exports = {
 
         });//return new promise
 
-    }//login
+    },//login
+
+    getUsers(){
+
+        return new Promise((resolve, reject)=>{
+
+            conn.query(`
+            SELECT * FROM tb_users ORDER BY title
+            `, (err, results) => {
+          
+              if (err) {
+
+                reject(err);
+
+              }
+          
+              resolve(results);
+              
+            });//conn query
+          
+          });//new promise
+
+    },
+
+
+    save(fields, files){
+
+      return new Promise((resolve, reject)=>{
+
+        let query = '', params = [
+          fields.name,
+          fields.email
+        ];
+
+        if(parseInt(fields.id) > 0) {
+
+          params.push(fields.id);
+
+          query =`
+            UPDATE tb_users
+            SET name = ?,
+                email = ?,
+            WHERE id = ?
+          `;
+
+        } else {
+
+          query = `
+          INSERT INTO tb_users (name, email, email)
+          VALUES (?, ?, ?)
+          `;
+
+          params.push(fields.password)
+
+        }
+
+        conn.query(query ,params, (err, results)=>{
+          
+          if (err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+
+        });//insert
+        
+      });//return new promise 
+
+    },//save
+
+    delete(id) {
+
+      return new Promise((resolve, reject) => {
+
+        conn.query(`
+          DELETE FROM tb_users WHERE id = ?
+        `, [
+          id
+        ], (err, result) =>{
+        
+          if(err) {
+            reject(err);
+          } else {
+            resolve(results);
+          }
+
+        });//conn query
+
+      })//new promise
+
+    }//delete 
 
 }//module exports 
