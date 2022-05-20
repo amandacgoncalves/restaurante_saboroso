@@ -24,7 +24,7 @@ module.exports = {
           
           });//new promise
 
-    },
+    },//get menus
 
 
     save(fields, files){

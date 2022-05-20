@@ -36,6 +36,50 @@ module.exports = {
 
         })//return new promise
 
-    }//save
+    },//save
+
+    getContacts(){
+
+        return new Promise((resolve, reject)=>{
+
+            conn.query(`
+            SELECT * FROM tb_contacts ORDER BY register DESC
+            `, (err, results) => {
+          
+              if (err) {
+
+                reject(err);
+
+              }
+          
+              resolve(results);
+              
+            });//conn query
+          
+          });//new promise
+
+    },//get menus
+
+    delete(id) {
+
+        return new Promise((resolve, reject) => {
+  
+          conn.query(`
+            DELETE FROM tb_contacts WHERE id = ?
+          `, [
+            id
+          ], (err, results) =>{
+          
+            if(err) {
+              reject(err);
+            } else {
+              resolve(results);
+            }
+  
+          });//conn query
+  
+        })//new promise
+  
+      }//delete 
 
 }//module exports
