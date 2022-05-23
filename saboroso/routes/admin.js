@@ -158,12 +158,21 @@ router.delete('/menus/:id', function (req, res, next) {
 
 router.get('/reservations', function(req, res, next) {
 
-    reservations.getReservations().then(data =>{
+    let start = (req.query.start) ? req.query.start : moment().subtract(1, 'year').format('YYYY MM DD');
+    let end = (req.query.end) ? req.query.end: moment().format('YYYY MM DD');
+
+    reservations.getReservations(
+        req
+    ).then(pag =>{
 
         res.render('admin/reservations', admin.getParams(req, {
-            date:{},
-            data,
-            moment
+            date:{
+                start,
+                end
+            },
+            data: pag.data,
+            moment,
+            links: pag.links
         }));//res render
 
     });//get reservations
@@ -178,7 +187,7 @@ router.post('/reservations', function(req, res, next){
         res.send(err);
     });//menus save catch
 
-});//router post()
+});//router post reservations
 
 router.delete('/reservations/:id', function (req, res, next) {
 
