@@ -84,6 +84,13 @@ class Pagination {
             nrend = this.getCurrentPage() + parseInt(limitPagesNav/2);
         }///if 
 
+        if (this.getCurrentPage() > 1) {
+            links.push({
+                text:'<',
+                href:'?' + this.getQueryString(Object.assign({}, params, {page: this.getCurrentPage() -1}))
+            });//links push
+        }//if página anterior
+
         for (let x = nrstart; x <= nrend; x++) {
 
             links.push({
@@ -93,6 +100,13 @@ class Pagination {
             });//links push
 
         }//for let x
+
+        if (this.getCurrentPage() < this.getTotalPages()) {
+            links.push({
+                text:'>',
+                href:'?' + this.getQueryString(Object.assign({}, params, {page:this.getCurrentPage() + 1}))
+            });//links push
+        }//if 
 
         return links;
 
