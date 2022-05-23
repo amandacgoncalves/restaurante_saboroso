@@ -233,15 +233,8 @@
   let graphic = new Chart(document.querySelector('#chart').getContext('2d'), {
     type:'line',
     data: {
-      labels:['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
-      datasets:[{
-        data:[3, 5, 6, 2, 5, 2],
-        label:'Reservas',
-        backgroundColor:'rgb(120, 7, 235)',
-        borderColor:'rgb(178, 12, 58)',
-        fill:true,
-        pointBackgroundColor:'#000'
-      }]//datasets
+      labels:[],
+      datasets:[]//datasets
     },//data
     options: {
       tooltips:{
@@ -255,9 +248,34 @@
             display:true,
             labelString:'Mês'
           }//scale label
-        }]//xaxes
+        }],//eixo x
+        yAxes:[{
+          display:true,
+          scaleLabel:{
+            display:true,
+            labelString:'Reservas'
+          }//scale label
+        }],//eixo y
       }//scales
     }//options
   });//let graphic
+
+  fetch(`/admin/reservations/charts${window.location.search}`).then(responses => response.json()).then(json =>{
+
+    graphic.data = {
+      labels: json.months,
+      datasets:[{
+        data:json.values,
+        label:'Reservas',
+        backgroundColor:'rgb(120, 7, 235)',
+        borderColor:'rgb(178, 12, 58)',
+        fill:true,
+        pointBackgroundColor:'#000'
+      }]//datasets
+    };
+
+    graphic.update();
+
+  });//fetch
 
 </script>
